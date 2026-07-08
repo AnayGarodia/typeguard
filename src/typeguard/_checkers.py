@@ -835,8 +835,15 @@ def check_protocol(
     memo: TypeCheckMemo,
 ) -> None:
     origin_annotations = typing.get_type_hints(origin_type)
+    checking_class = isclass(value)
     for attrname in sorted(typing_extensions.get_protocol_members(origin_type)):
         if (annotation := origin_annotations.get(attrname)) is not None:
+            if checking_class and typing.get_origin(annotation) is not typing.ClassVar:
+                # A non-ClassVar annotation describes an instance attribute
+                # (PEP 544). A class object is not expected to have it set, and
+                # static type checkers accept this, so don't flag it as missing.
+                continue
+
             try:
                 subject_member = getattr(value, attrname)
             except AttributeError:

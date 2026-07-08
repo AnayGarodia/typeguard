@@ -6,6 +6,10 @@ This library adheres to
 
 **UNRELEASED**
 
+- Fixed false positive when checking a class against ``type[SomeProtocol]`` where the
+  protocol declares non-``ClassVar`` (instance) attributes; only ``ClassVar`` members
+  are now required on the class itself
+  (`#499 <https://github.com/agronholm/typeguard/issues/499>`_)
 - Fixed compatibility with Python 3.15
   (`#554 <https://github.com/agronholm/typeguard/pull/554>`_; PR by @hrnciar)
 - Dropped support for Python 3.9
