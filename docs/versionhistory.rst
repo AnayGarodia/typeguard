@@ -12,6 +12,11 @@ This library adheres to
   (`#499 <https://github.com/agronholm/typeguard/issues/499>`_)
 - Fixed compatibility with Python 3.15
   (`#554 <https://github.com/agronholm/typeguard/pull/554>`_; PR by @hrnciar)
+- Fixed an assignment expression against an annotated name (``x: int``, then
+  ``if (x := ...)``) being instrumented as an unpacking target, which raised
+  ``TypeError`` for a non-iterable value and silently replaced an iterable value with
+  ``list(value)``
+  (`#557 <https://github.com/agronholm/typeguard/issues/557>`_)
 - Dropped support for Python 3.9
 
 **4.5.2** (2026-05-14)
@@ -599,7 +604,7 @@ This library adheres to
 
 **1.2.2** (2016-08-23)
 
-- Fixed checking of homogenous Tuple declarations (``Tuple[bool, ...]``)
+- Fixed checking of homogeneous Tuple declarations (``Tuple[bool, ...]``)
 
 **1.2.1** (2016-06-29)
 
